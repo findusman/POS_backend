@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString, IsOptional, IsInt, IsDate, IsBoolean, ArrayNotEmp
     IsNumber, ValidateNested, IsIn,  IsMongoId, IsEnum, ValidateIf, Min, Max,
     registerDecorator, ValidationOptions, ValidationArguments
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import { EnumIncoTerms, EnumUnitOfMeasure } from 'src/shared/enums/.enum';
 
 
@@ -142,13 +142,15 @@ export class CreateInvoiceDto {
     dueDate: Date;
 
 
-    @IsOptional()           
+    @IsOptional()   
+    @Transform(({ value }) => (value === '' ? undefined : value))        
     @Type(() => Date)
     @IsDate()
     supplyDate?: Date;
 
 
-    @IsOptional()           
+    @IsOptional()      
+    @Transform(({ value }) => (value === '' ? undefined : value))     
     @Type(() => Date)
     @IsDate()
     supplyEndDate?: Date;  
