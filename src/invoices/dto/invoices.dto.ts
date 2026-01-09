@@ -142,19 +142,22 @@ export class CreateInvoiceDto {
     dueDate: Date;
 
 
-    @IsOptional()   
-    @Transform(({ value }) => (value === '' ? undefined : value))        
-    @Type(() => Date)
+   
+    @IsOptional()
+    @Transform(({ value }) => (value ? new Date(value) : undefined), {
+        toClassOnly: true,
+    })
     @IsDate()
     supplyDate?: Date;
 
 
-    @IsOptional()      
-    @Transform(({ value }) => (value === '' ? undefined : value))     
-    @Type(() => Date)
+    @IsOptional()
+    @Transform(({ value }) => (value ? new Date(value) : undefined), {
+        toClassOnly: true,
+    })
     @IsDate()
-    supplyEndDate?: Date;  
-    
+    supplyEndDate?: Date;
+
 
     @IsOptional()
     @IsString()
