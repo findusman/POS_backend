@@ -696,7 +696,7 @@ export class InvoicesService {
                           <div class="header">
                             <!-- Logo on the left -->
                             <div class="logo-container">
-                              <img src="${logoSrc}" class="logo" alt="Company Logo">
+                            ${logoSrc ? `<img src="${logoSrc}" class="logo" alt="Company Logo">` : ''}
                             </div>
 
                             <!-- Title in the center -->
