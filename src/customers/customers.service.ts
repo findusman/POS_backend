@@ -82,10 +82,12 @@ export class CustomersService {
                       user_id: user.id,
                     };
 
+                    
                     if (searchBy && search) {
-                      whereClause[searchBy] = { $regex: search, $options: 'i' };
+                      const safeSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                      whereClause[searchBy] = { $regex: safeSearch, $options: 'i' };
                     }
-        
+
 
                   const recordsCount = await this.customersModel.countDocuments(whereClause);
         

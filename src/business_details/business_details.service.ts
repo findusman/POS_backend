@@ -22,8 +22,7 @@ export class BusinessDetailsService {
                 
                 let logoUrl: string;
                 if(logo){
-                 // logoUrl = await uploadToS3(logo);
-                  logoUrl = 'https://upload.wikimedia.org/wikipedia/commons/3/33/Vanamo_Logo.png';
+                  logoUrl = await uploadToS3(logo);       
                 }
 
                 const newBusinessDetail = await this.businessDetailsModel.create({
@@ -206,8 +205,7 @@ export class BusinessDetailsService {
 
                 let logoUrl: string = isBusinessDetailExist?.['logoUrl'];
                 if(logo){
-                 // logoUrl = await uploadToS3(logo);
-                  logoUrl = 'https://upload.wikimedia.org/wikipedia/commons/3/33/Vanamo_Logo.png';
+                  logoUrl = await uploadToS3(logo);
                 }
                    
                 const businessDetails = await this.businessDetailsModel.findOneAndUpdate(

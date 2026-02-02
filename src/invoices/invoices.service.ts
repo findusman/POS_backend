@@ -59,8 +59,7 @@ export class InvoicesService {
 
               let logoUrl: string;
               if(logo){
-                    // logoUrl = await uploadToS3(logo);
-                    logoUrl = 'https://upload.wikimedia.org/wikipedia/commons/3/33/Vanamo_Logo.png';
+                     logoUrl = await uploadToS3(logo);
               }
 
 
@@ -381,7 +380,17 @@ export class InvoicesService {
 
 
           async  generateInvoicePdf(invoice) {
-              const browser = await puppeteer.launch({ headless: true });
+              const browser = await puppeteer.launch({
+                headless: true,
+                args: [
+                  '--no-sandbox',
+                  '--disable-setuid-sandbox',
+                  '--disable-dev-shm-usage',
+                  '--disable-gpu',
+                ],
+              });
+
+
               const page = await browser.newPage();
               const html = await this.generateInvoiceHtml(invoice);
               await page.setContent(html, { waitUntil: 'domcontentloaded' });
@@ -781,10 +790,11 @@ export class InvoicesService {
                             </div>
 
 
-                             <div>
-                                <div>${invoice.specialTaxTreatment}</div>
-                                <div> ${invoice.paymentTerms} </div>
-                             </div>
+                           <div>
+                            ${invoice.specialTaxTreatment ? `<div>Special Tax Treatment: ${invoice.specialTaxTreatment}</div>` : ''}
+                            ${invoice.paymentTerms ? `<div>Payment Terms: ${invoice.paymentTerms}</div>` : ''}
+                          </div>
+
 
                             <!-- Items Table -->
                             <div class="full-width">
